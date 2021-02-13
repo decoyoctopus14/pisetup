@@ -1,7 +1,8 @@
 import json
 import os
+import sys
 
-transmission_dir="/mnt/grosso"
+transmission_dir=sys.argv[1]
 
 filename = '/etc/transmission-daemon/settings.json'
 with open(filename, 'r') as f:
