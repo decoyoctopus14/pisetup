@@ -32,4 +32,4 @@ service transmission-daemon stop
 python3 replace_json.py $transmission_dir
 service transmission-daemon restart
 
-reboot
+#reboot
