@@ -20,7 +20,7 @@ echo "alias bilancia='du -hs */ | sort -hr | head'" >> /home/pi/.bashrc
 echo "UUID=68809666-4130-4ba4-a5c1-8e1d68275d5d    /mnt/grosso    ext4    defaults,errors=remount-ro 0    1" >> /etc/fstab
 
 #install hassio
-apt-get install -y software-properties-common apparmor-utils apt-transport-https ca-certificates curl dbus jq network-manager
+apt-get install -y software-properties-common apparmor-utils apt-transport-https ca-certificates curl dbus jq network-manager docker
 systemctl disable ModemManager
 systemctl stop ModemManager
 curl -fsSL get.docker.com | sh
