@@ -11,7 +11,7 @@ apt-get install -y build-essential libssl-dev libffi-dev python3-dev
 apt-get install -y python3-pip
 pip3 install --upgrade pip3
 pip3 install virtualenv 
-mkdir /mnt/grosso
+mkdir ${transmission_dir}
 
 echo "alias bilancia='du -hs */ | sort -hr | head'" >> /home/pi/.bashrc
 
@@ -28,18 +28,24 @@ service transmission-daemon restart
 
 # install docker
 apt-get update
-apt-get install \
-    ca-certificates \
-    curl \
-    gnupg \
-    lsb-release
-mkdir -m 0755 -p /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get install ca-certificates curl gnupg lsb-release
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
-apt-get update
-apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+echo "{ \
+  \"exec-opts\": [\"native.cgroupdriver=systemd\"], \
+  \"insecure-registries\": [\"registry.cube.local:5000\"],\
+  \"experimental\": true,\
+  \"log-driver\": "json-file",\
+  \"storage-driver\": \"overlay2\",\
+  \"log-opts\": {\
+    \"max-size\": \"100m\"\
+  }\
+}\
+" > /etc/docker/daemon.json
 
 
 #install hassio
