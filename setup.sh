@@ -5,7 +5,7 @@
 transmission_dir="/mnt/grosso"
 ##########
 
-apt-get update 
+apt-get update && apt upgrade
 apt-get install -y ntfs-3g screen transmission-daemon samba at  weechat python3 git
 apt-get install -y build-essential libssl-dev libffi-dev python3-dev 
 apt-get install -y python3-pip
